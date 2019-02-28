@@ -41,6 +41,7 @@ class FreshdeskWidget extends Component {
     renderWithChildren() {
         const {
             url,
+            additionalQueryString,
             formTitle,
             formHeight,
             submitThanks,
@@ -64,7 +65,7 @@ class FreshdeskWidget extends Component {
             formTitle,
             formHeight,
             submitThanks,
-            queryString,
+            queryString: queryString + additionalQueryString,
             // thanks freshdesk for this
             offset: '-3000px'
         };
@@ -90,6 +91,7 @@ class FreshdeskWidget extends Component {
     renderPopUp() {
         const {
             url,
+            additionalQueryString,
             buttonType,
             buttonText,
             buttonColor,
@@ -127,7 +129,7 @@ class FreshdeskWidget extends Component {
             submitThanks,
             formHeight,
             formTitle,
-            queryString
+            queryString: queryString + additionalQueryString,
         };
 
         window.FreshWidget.init('', params);
@@ -136,7 +138,14 @@ class FreshdeskWidget extends Component {
     }
 
     renderIncorporated() {
-        const { url, formTitle, formHeight, submitThanks, autofill } = this.props;
+        const {
+            additionalQueryString,
+            url,
+            formTitle,
+            formHeight,
+            submitThanks,
+            autofill,
+        } = this.props;
 
         const widgetUrl = `${url}/widgets/feedback_widget/new?`;
 
@@ -158,7 +167,7 @@ class FreshdeskWidget extends Component {
                     className="freshwidget-embedded-form"
                     frameBorder="0"
                     id="freshwidget-embedded-form"
-                    src={widgetUrl + queryString}
+                    src={widgetUrl + queryString + additionalQueryString}
                     scrolling="no"
                     height={formHeight}
                     width="100%"
@@ -188,6 +197,7 @@ class FreshdeskWidget extends Component {
 FreshdeskWidget.propTypes = {
     url: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['pop-up', 'incorporated']),
+    additionalQueryString: PropTypes.string,
     buttonType: PropTypes.oneOf(['text', 'image']),
     buttonText: PropTypes.string,
     buttonColor: PropTypes.string,
@@ -207,6 +217,7 @@ FreshdeskWidget.propTypes = {
 
 FreshdeskWidget.defaultProps = {
     type: 'incorporated',
+    additionalQueryString: '',
     formTitle: 'Help and support',
     submitThanks: 'Thank you, one of our representatives will respond to you soon! =)',
     formHeight: '500px',
